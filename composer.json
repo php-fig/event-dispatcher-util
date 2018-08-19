@@ -1,0 +1,37 @@
+{
+    "name": "fig/event-dispatcher-util",
+    "type": "library",
+    "description": "Useful utility classes and traits for implementing the PSR events standard",
+    "keywords": [
+        "PSR-14",
+        "Events"
+    ],
+    "homepage": "https://github.com/Crell/Tukio",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "PHP-FIG",
+            "homepage": "https://www.php-fig.org/"
+        },
+        {
+            "name": "Larry Garfield",
+            "email": "larry@garfieldtech.com",
+            "homepage": "https://www.garfieldtech.com/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "~7.1",
+        "psr/event-dispatcher": "^0.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fig\\EventDispatcher\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Fig\\EventDispatcher\\": "tests"
+        }
+    }
+}
