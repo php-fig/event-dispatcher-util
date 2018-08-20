@@ -8,13 +8,13 @@ use Psr\EventDispatcher\EventInterface;
 use Psr\EventDispatcher\ListenerProviderInterface;
 
 /**
- * A compound provider encapsulates multiple other providers and concatenates their responses.
+ * An aggregate provider encapsulates multiple other providers and concatenates their responses.
  *
  * Be aware that any ordering of listeners in different sub-providers is ignored, and providers are
  * iterated in the order in which they were added.  That is, all listeners from the first provider
  * added will be returned to the caller, then all listeners from the second provider, and so on.
  */
-class CompoundProvider implements ListenerProviderInterface
+class AggregateProvider implements ListenerProviderInterface
 {
     /**
      * @var array
@@ -34,7 +34,7 @@ class CompoundProvider implements ListenerProviderInterface
      *
      * @param ListenerProviderInterface $provider
      *   The provider to add.
-     * @return CompoundProvider
+     * @return AggregateProvider
      *   The called object.
      */
     public function addProvider(ListenerProviderInterface $provider) : self
