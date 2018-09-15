@@ -3,20 +3,12 @@ declare(strict_types=1);
 
 namespace Fig\EventDispatcher;
 
-use Psr\EventDispatcher\StoppableTaskInterface;
-
 trait StoppableTaskTrait
 {
-    protected $stop = false;
+    protected $stopPropagation = false;
 
-    public function stopPropagation() : StoppableTaskInterface
+    public function isPropagationStopped() : bool
     {
-        $this->stop = true;
-        return $this;
-    }
-
-    public function isStopped() : bool
-    {
-        return $this->stop;
+        return $this->stopPropagation;
     }
 }
