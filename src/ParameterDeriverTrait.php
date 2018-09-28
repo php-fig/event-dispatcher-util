@@ -23,14 +23,15 @@ trait ParameterDeriverTrait
         // This try-catch is only here to keep OCD linters happy about uncaught reflection exceptions.
         try {
             switch (true) {
+                // See note on isClassCallable() for why this must be the first case.
+                case $this->isClassCallable($callable):
+                    $reflect = new \ReflectionClass($callable[0]);
+                    $params = $reflect->getMethod($callable[1])->getParameters();
+                    break;
                 case $this->isFunctionCallable($callable):
                 case $this->isClosureCallable($callable):
                     $reflect = new \ReflectionFunction($callable);
                     $params = $reflect->getParameters();
-                    break;
-                case $this->isClassCallable($callable):
-                    $reflect = new \ReflectionClass($callable[0]);
-                    $params = $reflect->getMethod($callable[1])->getParameters();
                     break;
                 case $this->isObjectCallable($callable):
                     $reflect = new \ReflectionObject($callable[0]);
@@ -93,10 +94,20 @@ trait ParameterDeriverTrait
     /**
      * Determines if a callable represents a static class method.
      *
+     * The parameter here is untyped so that this method may be called with an
+     * array that represents a class name and a non-static method.  The routine
+     * to determine the parameter type is identical to a static method, but such
+     * an array is still not technically callable.  Omitting the parameter type here
+     * allows us to use this method to handle both cases.
+     *
+     * Note that this method must therefore be the first in the switch statement
+     * above, or else subsequent calls will break as the array is not going to satisfy
+     * the callable type hint but it would pass `is_callable()`.  Because PHP.
+     *
      * @param callable $callable
      * @return True if the callable represents a static method, false otherwise.
      */
-    protected function isClassCallable(callable $callable) : bool
+    protected function isClassCallable($callable) : bool
     {
         return (is_array($callable) && is_string($callable[0]) && class_exists($callable[0]));
     }
