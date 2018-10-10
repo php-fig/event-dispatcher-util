@@ -8,7 +8,7 @@
 [![Total Downloads][ico-downloads]][link-downloads]
 
 
-This package contains a series of traits and base classes to cover the common, boilerplate portions of implementing a PSR-6-compliant cache library.
+This package contains a series of traits and base classes to cover the common, boilerplate portions of implementing a PSR-14-compliant event dispatcher library.
 
 PSR-14 is still in draft.  This library will be updated accordingly as PSR-14 evolves.  A stable release will be made once PSR-14 is complete.
 
