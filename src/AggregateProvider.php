@@ -21,7 +21,7 @@ class AggregateProvider implements ListenerProviderInterface
      */
     protected $providers = [];
 
-    public function getListenersForEvent(EventInterface $event): iterable
+    public function getListenersForEvent(object $event): iterable
     {
         /** @var ListenerProviderInterface $provider */
         foreach ($this->providers as $provider) {

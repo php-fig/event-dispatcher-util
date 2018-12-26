@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Fig\EventDispatcher;
 
-trait StoppableTaskTrait
+trait StoppableEventTrait
 {
     protected $stopPropagation = false;
 
