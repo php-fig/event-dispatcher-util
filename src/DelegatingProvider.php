@@ -36,6 +36,23 @@ class DelegatingProvider implements ListenerProviderInterface
     /** @var ListenerProviderInterface */
     protected $defaultProvider;
 
+    public function __construct(ListenerProviderInterface $defaultProvider = null)
+    {
+        if ($defaultProvider) {
+            $this->defaultProvider = $defaultProvider;
+        }
+    }
+
+    /**
+     * Adds a provider that will be deferred to for the specified Event types.
+     *
+     * @param ListenerProviderInterface $provider
+     *   The provider to which to defer.
+     * @param array $types
+     *   An array of class types. Any events matching these types will be delegated
+     *   to the specified provider(s).
+     * @return DelegatingProvider
+     */
     public function addProvider(ListenerProviderInterface $provider, array $types) : self
     {
         foreach ($types as $type) {
@@ -45,6 +62,14 @@ class DelegatingProvider implements ListenerProviderInterface
         return $this;
     }
 
+    /**
+     * Sets the provider that will be deferred to for un-listed Event types.
+     *
+     * @param ListenerProviderInterface $provider
+     *   The provider that should be called unless preempted by a dedicated provider.
+     * @return self
+     *   The called object
+     */
     public function setDefaultProvider(ListenerProviderInterface $provider) : self
     {
         $this->defaultProvider = $provider;
@@ -54,19 +79,16 @@ class DelegatingProvider implements ListenerProviderInterface
 
     public function getListenersForEvent(object $event): iterable
     {
-        $found = false;
         foreach ($this->providers as $type => $providers) {
             if ($event instanceof $type) {
                 /** @var ListenerProviderInterface $provider */
                 foreach ($providers as $provider) {
-                    $found = true;
                     yield from $provider->getListenersForEvent($event);
                 }
+                return;
             }
         }
 
-        if (!$found) {
-            yield from $this->defaultProvider->getListenersForEvent($event);
-        }
+        yield from $this->defaultProvider->getListenersForEvent($event);
     }
 }
