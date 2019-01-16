@@ -3,16 +3,70 @@ declare(strict_types=1);
 
 namespace Fig\EventDispatcher\Tagged;
 
-use Fig\EventDispatcher\TaggedProvider;
+use Fig\EventDispatcher\ParameterDeriverTrait;
+use Fig\EventDispatcher\TaggedProviderTrait;
 use Fig\EventDispatcher\CollectingEvent;
 use PHPUnit\Framework\TestCase;
+use Psr\EventDispatcher\ListenerProviderInterface;
 
 class TaggedProviderTest extends TestCase
 {
 
+    /** @var ListenerProviderInterface */
+    protected $provider;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->provider = new class implements ListenerProviderInterface {
+            use TaggedProviderTrait;
+            use ParameterDeriverTrait;
+
+            /** @var array */
+            protected $listeners = [];
+
+            /** @var array */
+            protected $all = [];
+
+
+            protected function eventType(): string
+            {
+                return WorkflowEventInterface::class;
+            }
+
+            protected function tagMethod(): string
+            {
+                return 'workflowName';
+            }
+
+            public function addListener(callable $listener, string $tagName = '', string $type = null) : void
+            {
+                $type = $type ?? $this->getParameterType($listener);
+
+                if ($tagName) {
+                    $this->listeners[$tagName][$type][] = $listener;
+                }
+                else {
+                    $this->all[$type][] = $listener;
+                }
+            }
+
+            protected function getListenersForTag(string $tag): iterable
+            {
+                return $this->listeners[$tag];
+            }
+
+            protected function getListenersForAllTags(): iterable
+            {
+                return $this->all;
+            }
+        };
+    }
+
     public function test_non_workflow_events_ignored() : void
     {
-        $p = new TaggedProvider(WorkflowEventInterface::class, 'workflowName');
+        $p = $this->provider;
 
         $p->addListener(function (WorkflowStart $event) {
             $event->add('A');
@@ -29,7 +83,7 @@ class TaggedProviderTest extends TestCase
 
     public function test_workflow_event_called_for_own_name_only() : void
     {
-        $p = new TaggedProvider(WorkflowEventInterface::class, 'workflowName');
+        $p = $this->provider;
 
         // This has the right workflow name and event type.
         $p->addListener(function (WorkflowStart $event) {
