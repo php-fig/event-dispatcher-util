@@ -46,10 +46,9 @@ class TaggedProviderTest extends TestCase
 
                 if ($tagName) {
                     $this->listeners[$tagName][$type][] = $listener;
+                    return;
                 }
-                else {
-                    $this->all[$type][] = $listener;
-                }
+                $this->all[$type][] = $listener;
             }
 
             protected function getListenersForTag(string $tag): iterable
