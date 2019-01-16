@@ -92,14 +92,21 @@ trait TaggedProviderTrait
 
         $tag = $event->{$this->tagMethod()}();
 
-        foreach ($this->getListenersForTag($tag) as $type => $listeners) {
-            foreach ($listeners as $listener) {
-                if ($event instanceof $type) {
-                    yield $listener;
-                }
-            }
-        }
-        foreach ($this->getListenersForAllTags() as $type => $listeners) {
+        yield from $this->filterListenersForEvent($event, $this->getListenersForTag($tag));
+        yield from $this->filterListenersForEvent($event, $this->getListenersForAllTags());
+    }
+
+    /**
+     * @param object $event
+     *   The Event to match against.
+     * @param iterable $listenerSet
+     *   An iterable in the format returned by getListenersForTag()/getListenersForAllTags().
+     * @return iterable
+     *   An iterable of listeners to be called.
+     */
+    protected function filterListenersForEvent(object $event, iterable $listenerSet) : iterable
+    {
+        foreach ($listenerSet as $type => $listeners) {
             foreach ($listeners as $listener) {
                 if ($event instanceof $type) {
                     yield $listener;
