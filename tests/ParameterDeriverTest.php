@@ -54,7 +54,6 @@ class ParameterDeriverTest extends TestCase
 
     public function test_derive_static_method() : void
     {
-        $test = new TestClass();
         $type = $this->deriver->getParameterType([TestClass::class, 'aStaticMethod']);
 
         $this->assertEquals(Foo::class, $type);
