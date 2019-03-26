@@ -107,10 +107,8 @@ trait TaggedProviderTrait
     protected function filterListenersForEvent(object $event, iterable $listenerSet) : iterable
     {
         foreach ($listenerSet as $type => $listeners) {
-            foreach ($listeners as $listener) {
-                if ($event instanceof $type) {
-                    yield $listener;
-                }
+            if ($event instanceof $type) {
+                yield from $listeners;
             }
         }
     }
