@@ -117,7 +117,7 @@ trait ParameterDeriverTrait
 
     /**
      * @param callable $callable
-     * @return True if the callable represents an invokeable object, false otherwise.
+     * @return True if the callable represents an invokable object, false otherwise.
      */
     private function isInvokable(callable $callable) : bool
     {
