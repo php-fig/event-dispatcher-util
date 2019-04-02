@@ -37,7 +37,7 @@ trait ParameterDeriverTrait
                     $reflect = new \ReflectionObject($callable[0]);
                     $params = $reflect->getMethod($callable[1])->getParameters();
                     break;
-                case $this->isInvokeable($callable):
+                case $this->isInvokable($callable):
                     $params = (new \ReflectionMethod($callable, '__invoke'))->getParameters();
                     break;
                 default:
@@ -119,7 +119,7 @@ trait ParameterDeriverTrait
      * @param callable $callable
      * @return True if the callable represents an invokeable object, false otherwise.
      */
-    private function isInvokeable(callable $callable) : bool
+    private function isInvokable(callable $callable) : bool
     {
         return is_object($callable);
     }
