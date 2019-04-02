@@ -39,11 +39,10 @@ trait ParameterDeriverTrait
                     break;
                 default:
                     throw new \InvalidArgumentException('Not a recognized type of callable');
-                    break;
             }
 
-            $rType =$params[0]->getType();
-            if ($rType == null) {
+            $rType = $params[0]->getType();
+            if ($rType === null) {
                 throw new \InvalidArgumentException('Listeners must declare an object type they can accept.');
             }
             $type = $rType->getName();
@@ -88,7 +87,7 @@ trait ParameterDeriverTrait
      */
     protected function isObjectCallable(callable $callable) : bool
     {
-        return (is_array($callable) && is_object($callable[0]));
+        return is_array($callable) && is_object($callable[0]);
     }
 
     /**
@@ -109,6 +108,6 @@ trait ParameterDeriverTrait
      */
     protected function isClassCallable($callable) : bool
     {
-        return (is_array($callable) && is_string($callable[0]) && class_exists($callable[0]));
+        return is_array($callable) && is_string($callable[0]) && class_exists($callable[0]);
     }
 }
