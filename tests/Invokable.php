@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Fig\EventDispatcher;
 
-class Invokeable
+class Invokable
 {
     public function __invoke(Foo $event)
     {
