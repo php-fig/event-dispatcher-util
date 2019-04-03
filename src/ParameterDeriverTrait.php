@@ -37,6 +37,9 @@ trait ParameterDeriverTrait
                     $reflect = new \ReflectionObject($callable[0]);
                     $params = $reflect->getMethod($callable[1])->getParameters();
                     break;
+                case $this->isInvokable($callable):
+                    $params = (new \ReflectionMethod($callable, '__invoke'))->getParameters();
+                    break;
                 default:
                     throw new \InvalidArgumentException('Not a recognized type of callable');
             }
@@ -109,5 +112,16 @@ trait ParameterDeriverTrait
     protected function isClassCallable($callable) : bool
     {
         return is_array($callable) && is_string($callable[0]) && class_exists($callable[0]);
+    }
+
+    /**
+     * Determines if a callable is a class that has __invoke() method
+     *
+     * @param callable $callable
+     * @return True if the callable represents an invokable object, false otherwise.
+     */
+    private function isInvokable(callable $callable) : bool
+    {
+        return is_object($callable);
     }
 }
