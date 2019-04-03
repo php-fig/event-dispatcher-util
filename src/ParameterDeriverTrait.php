@@ -116,6 +116,8 @@ trait ParameterDeriverTrait
     }
 
     /**
+     * Determines if a callable is a class that has __invoke() method
+     *
      * @param callable $callable
      * @return True if the callable represents an invokable object, false otherwise.
      */
