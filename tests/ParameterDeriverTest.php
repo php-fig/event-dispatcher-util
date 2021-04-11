@@ -19,7 +19,7 @@ class ParameterDeriverTest extends TestCase
 
     protected $deriver;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

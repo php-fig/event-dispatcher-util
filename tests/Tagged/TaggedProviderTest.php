@@ -15,7 +15,7 @@ class TaggedProviderTest extends TestCase
     /** @var ListenerProviderInterface */
     protected $provider;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
