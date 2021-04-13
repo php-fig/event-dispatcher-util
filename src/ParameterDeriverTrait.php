@@ -11,6 +11,10 @@ trait ParameterDeriverTrait
     /**
      * Derives the class type of the first argument of a callable.
      *
+     * If the callable is an array, referring to a method or static method, of an object
+     * that is not yet defined then it may fail a callable check even if it will be callable later.
+     * We therefore have to skip type hinting the parameter to avoid it failing in some edge cases.
+     *
      * @param callable $callable
      *   The callable for which we want the parameter type.
      * @return string
@@ -18,8 +22,6 @@ trait ParameterDeriverTrait
      */
     protected function getParameterType($callable) : string
     {
-        // We can't type hint $callable as it could be an array, and arrays are not callable. Sometimes. Bah, PHP.
-
         // This try-catch is only here to keep OCD linters happy about uncaught reflection exceptions.
         try {
             // See the docblock of isClassCallable() for why this needs to come first.
