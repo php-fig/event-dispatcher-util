@@ -34,7 +34,7 @@ trait TaggedProviderTrait
      * @return string
      *   The class or interface type that this Provider is for.
      */
-    abstract protected function eventType() : string;
+    abstract protected function eventType(): string;
 
     /**
      * Returns the method to call on an event to get its tag.
@@ -63,7 +63,7 @@ trait TaggedProviderTrait
      *   $type is a parent of the Event's type.)  The value is an iterable
      *   of Listeners that apply to that type and to the tag that was passed.
      */
-    abstract protected function getListenersForTag(string $tag) : iterable;
+    abstract protected function getListenersForTag(string $tag): iterable;
 
     /**
      * Returns an ordered iterable of Listeners relevant to all tags.
@@ -104,7 +104,7 @@ trait TaggedProviderTrait
      * @return iterable
      *   An iterable of listeners to be called.
      */
-    protected function filterListenersForEvent(object $event, iterable $listenerSet) : iterable
+    protected function filterListenersForEvent(object $event, iterable $listenerSet): iterable
     {
         foreach ($listenerSet as $type => $listeners) {
             if ($event instanceof $type) {

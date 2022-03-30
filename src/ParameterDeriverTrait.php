@@ -20,7 +20,7 @@ trait ParameterDeriverTrait
      * @return string
      *   The class the parameter is type hinted on.
      */
-    protected function getParameterType($callable) : string
+    protected function getParameterType($callable): string
     {
         // This try-catch is only here to keep OCD linters happy about uncaught reflection exceptions.
         try {
@@ -54,9 +54,10 @@ trait ParameterDeriverTrait
      * @deprecated No longer necessary so will be removed at some point in the future.
      *
      * @param callable $callable
-     * @return True if the callable represents a function, false otherwise.
+     * @return bool
+     *   True if the callable represents a function, false otherwise.
      */
-    protected function isFunctionCallable(callable $callable) : bool
+    protected function isFunctionCallable(callable $callable): bool
     {
         // We can't check for function_exists() because it may be included later by the time it matters.
         return is_string($callable);
@@ -68,9 +69,10 @@ trait ParameterDeriverTrait
      * @deprecated No longer necessary so will be removed at some point in the future.
      *
      * @param callable $callable
-     * @return True if the callable represents a closure object, false otherwise.
+     * @return bool
+     *   True if the callable represents a closure object, false otherwise.
      */
-    protected function isClosureCallable(callable $callable) : bool
+    protected function isClosureCallable(callable $callable): bool
     {
         return $callable instanceof \Closure;
     }
@@ -81,9 +83,10 @@ trait ParameterDeriverTrait
      * @deprecated No longer necessary so will be removed at some point in the future.
      *
      * @param callable $callable
-     * @return True if the callable represents a method object, false otherwise.
+     * @return bool
+     *   True if the callable represents a method object, false otherwise.
      */
-    protected function isObjectCallable(callable $callable) : bool
+    protected function isObjectCallable(callable $callable): bool
     {
         return is_array($callable) && is_object($callable[0]);
     }
@@ -101,9 +104,10 @@ trait ParameterDeriverTrait
      * an `is_callable()` and will fail `Closure::fromCallable()`.  Because PHP.
      *
      * @param callable $callable
-     * @return True if the callable represents a static method, false otherwise.
+     * @return bool
+     *   True if the callable represents a static method, false otherwise.
      */
-    protected function isClassCallable($callable) : bool
+    protected function isClassCallable($callable): bool
     {
         return is_array($callable) && is_string($callable[0]) && class_exists($callable[0]);
     }
@@ -114,9 +118,10 @@ trait ParameterDeriverTrait
      * @deprecated No longer necessary so will be removed at some point in the future.
      *
      * @param callable $callable
-     * @return True if the callable represents an invokable object, false otherwise.
+     * @return bool
+     *   True if the callable represents an invokable object, false otherwise.
      */
-    private function isInvokable(callable $callable) : bool
+    private function isInvokable(callable $callable): bool
     {
         return is_object($callable);
     }

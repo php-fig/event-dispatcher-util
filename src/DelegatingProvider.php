@@ -24,7 +24,6 @@ use Psr\EventDispatcher\ListenerProviderInterface;
  */
 class DelegatingProvider implements ListenerProviderInterface
 {
-
     /**
      * @var array
      *
@@ -53,7 +52,7 @@ class DelegatingProvider implements ListenerProviderInterface
      *   to the specified provider(s).
      * @return DelegatingProvider
      */
-    public function addProvider(ListenerProviderInterface $provider, array $types) : self
+    public function addProvider(ListenerProviderInterface $provider, array $types): self
     {
         foreach ($types as $type) {
             $this->providers[$type][] = $provider;
@@ -70,7 +69,7 @@ class DelegatingProvider implements ListenerProviderInterface
      * @return self
      *   The called object
      */
-    public function setDefaultProvider(ListenerProviderInterface $provider) : self
+    public function setDefaultProvider(ListenerProviderInterface $provider): self
     {
         $this->defaultProvider = $provider;
 

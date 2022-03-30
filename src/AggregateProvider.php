@@ -36,7 +36,7 @@ class AggregateProvider implements ListenerProviderInterface
      * @return AggregateProvider
      *   The called object.
      */
-    public function addProvider(ListenerProviderInterface $provider) : self
+    public function addProvider(ListenerProviderInterface $provider): self
     {
         $this->providers[] = $provider;
         return $this;
