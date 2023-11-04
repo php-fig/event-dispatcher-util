@@ -72,4 +72,12 @@ class ParameterDeriverTest extends TestCase
 
         $this->assertEquals(Foo::class, $type);
     }
+
+    public function test_derive_any_invokable() : void
+    {
+        $type = $this->deriver->getParameterType(new InvokableAnyObject());
+
+        $this->assertEquals('object', $type);
+
+    }
 }
