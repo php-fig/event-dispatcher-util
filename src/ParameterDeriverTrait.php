@@ -37,7 +37,20 @@ trait ParameterDeriverTrait
             if ($rType === null) {
                 throw new \InvalidArgumentException('Listeners must declare an object type they can accept.');
             }
-            $type = $rType->getName();
+
+            // Support only a single named object type. Union or intersection
+            // types are not accepted for listener parameter typing. Use method
+            // existence checks instead of class checks for compatibility
+            // across PHP 7.2+ versions.
+            if (method_exists($rType, 'getName')) {
+                if (method_exists($rType, 'isBuiltin') && $rType->isBuiltin()) {
+                    throw new \InvalidArgumentException('Listeners must declare a class/interface type, not a builtin type.');
+                }
+
+                $type = $rType->getName();
+            } else {
+                throw new \InvalidArgumentException('Listeners must declare a single object type they can accept.');
+            }
         }
         catch (\ReflectionException $e) {
             throw new \RuntimeException('Type error registering listener.', 0, $e);
