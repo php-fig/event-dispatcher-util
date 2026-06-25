@@ -35,7 +35,7 @@ trait ParameterDeriverTrait
 
             $rType = $params[0]->getType();
             if (
-                !($rType instanceof \ReflectionNamedType)       // type is union or intersection
+                !($rType instanceof \ReflectionNamedType)       // type is missing, union, or intersection
                 || $rType->isBuiltIn()                          // type is built-in, aka scalar/primitive
             ) {
                 throw new \InvalidArgumentException('Listeners must declare a single class/interface type they can accept.');
