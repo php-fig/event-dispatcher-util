@@ -75,7 +75,7 @@ trait TaggedProviderTrait
      * Note that this method is called after getListenersForTag(), so
      * tag-specific Listeners will always be invoked first.
      *
-     * @return iterable
+     * @return iterable<callable>
      *   An ordered iterable of candidate Listeners.  The key of each entry
      *   is the Event type the Listener is for.  (It will also apply if the
      *   $type is a parent of the Event's type.)  The value is an iterable
@@ -83,6 +83,9 @@ trait TaggedProviderTrait
      */
     abstract protected function getListenersForAllTags() : iterable;
 
+    /**
+     * @return iterable<callable>
+     */
     public function getListenersForEvent(object $event) : iterable
     {
         $eventType = $this->eventType();
@@ -101,7 +104,7 @@ trait TaggedProviderTrait
      *   The Event to match against.
      * @param iterable $listenerSet
      *   An iterable in the format returned by getListenersForTag()/getListenersForAllTags().
-     * @return iterable
+     * @return iterable<callable>
      *   An iterable of listeners to be called.
      */
     protected function filterListenersForEvent(object $event, iterable $listenerSet): iterable

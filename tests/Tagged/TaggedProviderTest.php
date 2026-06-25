@@ -6,28 +6,26 @@ namespace Fig\EventDispatcher\Tagged;
 use Fig\EventDispatcher\ParameterDeriverTrait;
 use Fig\EventDispatcher\TaggedProviderTrait;
 use Fig\EventDispatcher\CollectingEvent;
+use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\TestCase;
 use Psr\EventDispatcher\ListenerProviderInterface;
 
 class TaggedProviderTest extends TestCase
 {
+    protected ListenerProviderInterface $provider;
 
-    /** @var ListenerProviderInterface */
-    protected $provider;
-
-    public function setUp(): void
+    #[Before]
+    public function setupMockProvider(): void
     {
-        parent::setUp();
-
         $this->provider = new class implements ListenerProviderInterface {
             use TaggedProviderTrait;
             use ParameterDeriverTrait;
 
-            /** @var array */
-            protected $listeners = [];
+            /** @var array<callable> */
+            protected array $listeners = [];
 
-            /** @var array */
-            protected $all = [];
+            /** @var array<callable> */
+            protected array $all = [];
 
 
             protected function eventType(): string

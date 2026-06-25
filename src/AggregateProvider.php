@@ -20,6 +20,9 @@ class AggregateProvider implements ListenerProviderInterface
      */
     protected $providers = [];
 
+    /**
+     * @return iterable<callable>
+     */
     public function getListenersForEvent(object $event): iterable
     {
         /** @var ListenerProviderInterface $provider */

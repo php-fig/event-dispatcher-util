@@ -76,6 +76,9 @@ class DelegatingProvider implements ListenerProviderInterface
         return $this;
     }
 
+    /**
+     * @return iterable<callable>
+     */
     public function getListenersForEvent(object $event): iterable
     {
         foreach ($this->providers as $type => $providers) {
