@@ -32,10 +32,10 @@ class DelegatingProvider implements ListenerProviderInterface
      */
     protected $providers =[];
 
-    /** @var ListenerProviderInterface */
+    /** @var ListenerProviderInterface|null */
     protected $defaultProvider;
 
-    public function __construct(ListenerProviderInterface $defaultProvider = null)
+    public function __construct(?ListenerProviderInterface $defaultProvider = null)
     {
         if ($defaultProvider) {
             $this->defaultProvider = $defaultProvider;
