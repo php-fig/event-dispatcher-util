@@ -17,7 +17,7 @@ trait ParameterDeriverTrait
      *
      * @param callable $callable
      *   The callable for which we want the parameter type.
-     * @return string
+     * @return class-string
      *   The class the parameter is type hinted on.
      */
     protected function getParameterType($callable): string
