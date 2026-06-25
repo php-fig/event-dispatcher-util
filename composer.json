@@ -6,12 +6,6 @@
         "PSR-14",
         "Events"
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/php-fig/event-dispatcher"
-        }
-    ],
     "homepage": "https://github.com/php-fig/event-dispatcher-util",
     "license": "MIT",
     "authors": [
