@@ -25,22 +25,14 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 class DelegatingProvider implements ListenerProviderInterface
 {
     /**
-     * @var array
+     * @var array<class-string, array<ListenerProviderInterface>>
      *
      * An array of type to provider maps.  The keys are class name strings.
      * The values are an array of provider objects that should be called for that type.
      */
-    protected $providers =[];
+    protected array $providers = [];
 
-    /** @var ListenerProviderInterface|null */
-    protected $defaultProvider;
-
-    public function __construct(?ListenerProviderInterface $defaultProvider = null)
-    {
-        if ($defaultProvider) {
-            $this->defaultProvider = $defaultProvider;
-        }
-    }
+    public function __construct(protected ?ListenerProviderInterface $defaultProvider = null) {}
 
     /**
      * Adds a provider that will be deferred to for the specified Event types.
@@ -76,11 +68,13 @@ class DelegatingProvider implements ListenerProviderInterface
         return $this;
     }
 
+    /**
+     * @return iterable<callable>
+     */
     public function getListenersForEvent(object $event): iterable
     {
         foreach ($this->providers as $type => $providers) {
             if ($event instanceof $type) {
-                /** @var ListenerProviderInterface $provider */
                 foreach ($providers as $provider) {
                     yield from $provider->getListenersForEvent($event);
                 }

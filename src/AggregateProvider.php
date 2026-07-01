@@ -16,10 +16,13 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 class AggregateProvider implements ListenerProviderInterface
 {
     /**
-     * @var array
+     * @var array<ListenerProviderInterface>
      */
-    protected $providers = [];
+    protected array $providers = [];
 
+    /**
+     * @return iterable<callable>
+     */
     public function getListenersForEvent(object $event): iterable
     {
         /** @var ListenerProviderInterface $provider */

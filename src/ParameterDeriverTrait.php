@@ -17,7 +17,7 @@ trait ParameterDeriverTrait
      *
      * @param callable $callable
      *   The callable for which we want the parameter type.
-     * @return string
+     * @return class-string
      *   The class the parameter is type hinted on.
      */
     protected function getParameterType($callable): string
@@ -35,8 +35,7 @@ trait ParameterDeriverTrait
 
             $rType = $params[0]->getType();
             if (
-                $rType === null                                 // no type declared
-                || !($rType instanceof \ReflectionNamedType)    // type is union or intersection
+                !($rType instanceof \ReflectionNamedType)       // type is missing, union, or intersection
                 || $rType->isBuiltIn()                          // type is built-in, aka scalar/primitive
             ) {
                 throw new \InvalidArgumentException('Listeners must declare a single class/interface type they can accept.');
